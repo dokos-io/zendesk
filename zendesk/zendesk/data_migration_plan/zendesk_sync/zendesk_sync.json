@@ -1,0 +1,38 @@
+{
+ "creation": "2018-12-13 18:31:18.545215", 
+ "docstatus": 0, 
+ "doctype": "Data Migration Plan", 
+ "idx": 0, 
+ "mappings": [
+  {
+   "enabled": 1, 
+   "mapping": "ERPNext Customer to Zendesk Organization"
+  }, 
+  {
+   "enabled": 1, 
+   "mapping": "ERPNext Supplier to Zendesk Organization"
+  }, 
+  {
+   "enabled": 1, 
+   "mapping": "ERPNext Contact to Zendesk User"
+  }, 
+  {
+   "enabled": 1, 
+   "mapping": "Zendesk Organization to ERPNext Customer"
+  }, 
+  {
+   "enabled": 1, 
+   "mapping": "Zendesk Organization to ERPNext Supplier"
+  }, 
+  {
+   "enabled": 1, 
+   "mapping": "Zendesk User to ERPNext Contact"
+  }
+ ], 
+ "modified": "2018-12-24 17:04:58.051705", 
+ "modified_by": "Administrator", 
+ "module": "Zendesk", 
+ "name": "Zendesk Sync", 
+ "owner": "Administrator", 
+ "plan_name": "Zendesk Sync"
+}

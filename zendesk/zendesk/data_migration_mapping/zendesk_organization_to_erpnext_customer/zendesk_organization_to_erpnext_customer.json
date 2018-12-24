@@ -1,0 +1,31 @@
+{
+ "condition": "{\"organization_type\": \"customer\"}", 
+ "creation": "2018-12-13 18:24:31.987786", 
+ "docstatus": 0, 
+ "doctype": "Data Migration Mapping", 
+ "fields": [
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "zendesk_sync_id", 
+   "remote_fieldname": "id"
+  }, 
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "customer_name", 
+   "remote_fieldname": "name"
+  }
+ ], 
+ "idx": 0, 
+ "local_doctype": "Customer", 
+ "local_primary_key": "zendesk_sync_id", 
+ "mapping_name": "Zendesk Organization to ERPNext Customer", 
+ "mapping_type": "Pull", 
+ "migration_id_field": "zendesk_sync_id", 
+ "modified": "2018-12-24 17:04:58.419505", 
+ "modified_by": "Administrator", 
+ "name": "Zendesk Organization to ERPNext Customer", 
+ "owner": "Administrator", 
+ "page_length": 100, 
+ "remote_objectname": "Organization", 
+ "remote_primary_key": "id"
+}

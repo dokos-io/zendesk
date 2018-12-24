@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include zendesk *.css
+recursive-include zendesk *.csv
+recursive-include zendesk *.html
+recursive-include zendesk *.ico
+recursive-include zendesk *.js
+recursive-include zendesk *.json
+recursive-include zendesk *.md
+recursive-include zendesk *.png
+recursive-include zendesk *.py
+recursive-include zendesk *.svg
+recursive-include zendesk *.txt
+recursive-exclude zendesk *.pyc

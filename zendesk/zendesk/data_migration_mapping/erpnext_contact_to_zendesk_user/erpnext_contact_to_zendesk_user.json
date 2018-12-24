@@ -1,0 +1,45 @@
+{
+ "creation": "2018-12-17 14:46:53.059402", 
+ "docstatus": 0, 
+ "doctype": "Data Migration Mapping", 
+ "fields": [
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "zendesk_sync_id", 
+   "remote_fieldname": "id"
+  }, 
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "name", 
+   "remote_fieldname": "name"
+  }, 
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "email_id", 
+   "remote_fieldname": "email"
+  }, 
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "phone", 
+   "remote_fieldname": "phone"
+  }, 
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "company", 
+   "remote_fieldname": "organization_id"
+  }
+ ], 
+ "idx": 0, 
+ "local_doctype": "Contact", 
+ "local_primary_key": "zendesk_sync_id", 
+ "mapping_name": "ERPNext Contact to Zendesk User", 
+ "mapping_type": "Push", 
+ "migration_id_field": "zendesk_sync_id", 
+ "modified": "2018-12-24 17:04:58.406005", 
+ "modified_by": "Administrator", 
+ "name": "ERPNext Contact to Zendesk User", 
+ "owner": "Administrator", 
+ "page_length": 20, 
+ "remote_objectname": "User", 
+ "remote_primary_key": "id"
+}
