@@ -12,6 +12,11 @@
    "is_child_table": 0, 
    "local_fieldname": "supplier_name", 
    "remote_fieldname": "name"
+  }, 
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "organization_fields", 
+   "remote_fieldname": "organization_fields"
   }
  ], 
  "idx": 0, 
@@ -20,7 +25,7 @@
  "mapping_name": "ERPNext Supplier to Zendesk Organization", 
  "mapping_type": "Push", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2018-12-24 17:04:58.394618", 
+ "modified": "2018-12-26 10:56:21.221367", 
  "modified_by": "Administrator", 
  "name": "ERPNext Supplier to Zendesk Organization", 
  "owner": "Administrator", 

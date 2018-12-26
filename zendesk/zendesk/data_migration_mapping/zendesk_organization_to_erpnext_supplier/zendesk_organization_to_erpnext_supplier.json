@@ -13,6 +13,11 @@
    "is_child_table": 0, 
    "local_fieldname": "supplier_name", 
    "remote_fieldname": "name"
+  }, 
+  {
+   "is_child_table": 0, 
+   "local_fieldname": "supplier_group", 
+   "remote_fieldname": "supplier_group"
   }
  ], 
  "idx": 0, 
@@ -21,7 +26,7 @@
  "mapping_name": "Zendesk Organization to ERPNext Supplier", 
  "mapping_type": "Pull", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2018-12-24 17:04:58.461047", 
+ "modified": "2018-12-26 10:56:21.265134", 
  "modified_by": "Administrator", 
  "name": "Zendesk Organization to ERPNext Supplier", 
  "owner": "Administrator", 
