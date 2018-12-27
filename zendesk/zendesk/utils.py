@@ -16,7 +16,7 @@ def format_phone_number(doc, method):
 	if doc.mobile_no:
 		try:
 			y = phonenumbers.parse(doc.mobile_no, "FR")
-			doc.phone = phonenumbers.format_number(y, phonenumbers.PhoneNumberFormat.E164)
+			doc.mobile_no = phonenumbers.format_number(y, phonenumbers.PhoneNumberFormat.E164)
 		except Exception as e:
 			frappe.throw(str(e))
 
@@ -67,8 +67,22 @@ def update_all_contact_numbers():
 
 	for contact in contacts:
 		c = frappe.get_doc("Contact", contact.name)
-		try:
-			c.save()
-		except Exception as e:
-			print(c.name)
-			print(e)
+		if c.phone:
+			try:
+				x = phonenumbers.parse(c.phone, "FR")
+				c.phone = phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
+			except Exception as e:
+				print(str(e))
+
+		if c.mobile_no:
+			try:
+				y = phonenumbers.parse(c.mobile_no, "FR")
+				c.mobile_no = phonenumbers.format_number(y, phonenumbers.PhoneNumberFormat.E164)
+			except Exception as e:
+				print(str(e))
+
+		if c.phone or c.mobile_no:
+			try:
+				c.save()
+			except Exception as e:
+				print(e)
