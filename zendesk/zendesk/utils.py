@@ -52,7 +52,7 @@ def merge_zendesk_users():
 	for user in users:
 		print(user.name)
 		if user.name.startswith("Caller +"):
-			frappe.enqueue("zendesk.zendesk.utils.merge_user", user=user)
+			merge_user(user)
 
 def merge_user(user):
 	connector = ZendeskConnector(BaseConnection)
