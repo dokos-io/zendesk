@@ -50,8 +50,10 @@ def merge_zendesk_users():
 	users = connector.zenpy_client.users()
 
 	for user in users:
-		print(user.name)
 		if user.name.startswith("Caller +"):
+			merge_user(user)
+
+		elif user.name.startswith("+33") or user.name.startswith("+44"):
 			merge_user(user)
 
 def merge_user(user):
