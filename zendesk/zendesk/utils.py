@@ -72,6 +72,7 @@ def update_all_contact_numbers():
 				x = phonenumbers.parse(c.phone, "FR")
 				c.phone = phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
 			except Exception as e:
+				print(c.name)
 				print(str(e))
 
 		if c.mobile_no:
@@ -79,10 +80,12 @@ def update_all_contact_numbers():
 				y = phonenumbers.parse(c.mobile_no, "FR")
 				c.mobile_no = phonenumbers.format_number(y, phonenumbers.PhoneNumberFormat.E164)
 			except Exception as e:
+				print(c.name)
 				print(str(e))
 
 		if c.phone or c.mobile_no:
 			try:
 				c.save()
 			except Exception as e:
+				print(c.name)
 				print(e)
