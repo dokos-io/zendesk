@@ -4,7 +4,6 @@ import frappe
 import phonenumbers
 from zendesk.zendesk.connector.zendesk_connector import ZendeskConnector
 from frappe.data_migration.doctype.data_migration_connector.connectors.base import BaseConnection
-from frappe.utils.background_jobs import enqueue
 
 def format_phone_number(doc, method):
 	if doc.phone:
@@ -50,8 +49,8 @@ def merge_zendesk_users():
 	connector = ZendeskConnector(BaseConnection)
 	users = connector.zenpy_client.users()
 
-	for user in users:
-		enqueue("zendesk.zendesk.utils.merge_user", user=user)
+	for u in users:
+		frappe.enqueue("zendesk.zendesk.utils.merge_user", user=u)
 
 def merge_user(user):
 	if user.name.startswith("Caller +"): 
