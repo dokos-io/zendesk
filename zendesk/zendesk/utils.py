@@ -4,6 +4,7 @@ import frappe
 import phonenumbers
 from zendesk.zendesk.connector.zendesk_connector import ZendeskConnector
 from frappe.data_migration.doctype.data_migration_connector.connectors.base import BaseConnection
+from frappe.utils.background_jobs import enqueue
 
 def format_phone_number(doc, method):
 	if doc.phone:
@@ -40,7 +41,8 @@ def update_zendesk_phonenumbers():
 						response = connector.zenpy_client.users.update(user)
 						print(response)
 					except Exception as e:
-						frappe.log_error(e, "Zendesk Phonenumber update error")
+						print(user.name)
+						print(e)
 			except phonenumbers.phonenumberutil.NumberParseException:
 				continue
 
@@ -49,22 +51,25 @@ def merge_zendesk_users():
 	users = connector.zenpy_client.users()
 
 	for user in users:
-		if user.name.startswith("Caller +"): 
-			for existing_user in connector.zenpy_client.search(type='user', phone=user.phone):
-				if existing_user.name != user.name:
-					try:
-						response = connector.zenpy_client.users.merge(source_user=user, dest_user=existing_user)
-						print(response)
-					except Exception as e:
-						frappe.log_error(e, "Zendesk Phonenumber update error")
+		enqueue("zendesk.zendesk.utils.merge_user", user=user)
 
-			for existing_user in connector.zenpy_client.search(type='user', shared_phone_number=user.phone):
-				if existing_user.name != user.name:
-					try:
-						response = connector.zenpy_client.users.merge(source_user=user, dest_user=existing_user)
-						print(response)
-					except Exception as e:
-						frappe.log_error(e, "Zendesk Phonenumber update error")
+def merge_user(user):
+	if user.name.startswith("Caller +"): 
+		for existing_user in connector.zenpy_client.search(type='user', phone=user.phone):
+			if existing_user.name != user.name:
+				try:
+					response = connector.zenpy_client.users.merge(source_user=user, dest_user=existing_user)
+					print(response)
+				except Exception as e:
+					frappe.log_error(e, user.name)
+
+		for existing_user in connector.zenpy_client.search(type='user', shared_phone_number=user.phone):
+			if existing_user.name != user.name:
+				try:
+					response = connector.zenpy_client.users.merge(source_user=user, dest_user=existing_user)
+					print(response)
+				except Exception as e:
+					frappe.log_error(e, user.name)
 
 def update_all_contact_numbers():
 	contacts = frappe.get_all("Contact")
