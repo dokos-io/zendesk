@@ -28,15 +28,19 @@ def update_zendesk_phonenumbers():
 	for user in users:
 		if user.phone is not None:
 			try:
-				old_phone =phonenumbers.parse(user.phone, "FR")
+				old_phone = phonenumbers.parse(user.phone, "FR")
 				new_phone = phonenumbers.format_number(old_phone, phonenumbers.PhoneNumberFormat.E164)
-				user.phone = new_phone
 
-				try:
-					response = connector.zenpy_client.users.update(user)
-					print(response)
-				except Exception as e:
-					frappe.log_error(e, "Zendesk Phonenumber update error")
+				if user.phone == new_phone:
+					continue
+				else:
+					user.phone = new_phone
+
+					try:
+						response = connector.zenpy_client.users.update(user)
+						print(response)
+					except Exception as e:
+						frappe.log_error(e, "Zendesk Phonenumber update error")
 			except phonenumbers.phonenumberutil.NumberParseException:
 				continue
 
