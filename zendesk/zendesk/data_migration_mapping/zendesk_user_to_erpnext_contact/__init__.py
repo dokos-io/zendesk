@@ -13,6 +13,7 @@ def pre_process(user):
 
 	phone = frappe.safe_decode(user.phone) if user.phone is not None else user.phone
 
+	condition = None
 	if user.email is not None and phone is not None:
 		condition = "(email_id = '{0}' OR phone = '{1}') AND (zendesk_sync_id != '{2}' OR zendesk_sync_id IS NULL)".format(user.email, frappe.safe_encode(phone), user.id)
 	elif user.email is not None:
@@ -20,19 +21,20 @@ def pre_process(user):
 	elif phone is not None:
 		condition = "phone = '{0}' AND (zendesk_sync_id != '{1}' OR zendesk_sync_id IS NULL)".format(frappe.safe_encode(phone), user.id)
 
-	contacts = frappe.db.sql("""
-		SELECT
-			name
-		FROM
-			tabContact
-		WHERE
-			%s
-	""" % condition, as_dict=True)
-	for contact in contacts:
-		try:
-			frappe.db.set_value("Contact", frappe.safe_decode(contact.name), "zendesk_sync_id", user.id)
-		except Exception as e:
-			frappe.log_error(e, user.name)
+	if condition:
+		contacts = frappe.db.sql("""
+			SELECT
+				name
+			FROM
+				tabContact
+			WHERE
+				%s
+		""" % condition, as_dict=True)
+		for contact in contacts:
+			try:
+				frappe.db.set_value("Contact", frappe.safe_decode(contact.name), "zendesk_sync_id", user.id)
+			except Exception as e:
+				frappe.log_error(e, user.name)
 
 	return {
 		'id': user.id,
