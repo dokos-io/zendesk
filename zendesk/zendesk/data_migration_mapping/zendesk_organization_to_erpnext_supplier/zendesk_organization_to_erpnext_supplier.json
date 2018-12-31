@@ -26,7 +26,7 @@
  "mapping_name": "Zendesk Organization to ERPNext Supplier", 
  "mapping_type": "Pull", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2018-12-26 10:56:21.265134", 
+ "modified": "2018-12-31 15:24:44.274522", 
  "modified_by": "Administrator", 
  "name": "Zendesk Organization to ERPNext Supplier", 
  "owner": "Administrator", 

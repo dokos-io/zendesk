@@ -35,7 +35,7 @@
  "mapping_name": "ERPNext Contact to Zendesk User", 
  "mapping_type": "Push", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2018-12-26 10:56:21.233456", 
+ "modified": "2018-12-31 15:24:44.249782", 
  "modified_by": "Administrator", 
  "name": "ERPNext Contact to Zendesk User", 
  "owner": "Administrator", 

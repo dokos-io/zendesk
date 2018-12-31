@@ -3,7 +3,7 @@ import frappe
 from frappe.data_migration.doctype.data_migration_connector.connectors.base import BaseConnection
 from frappe.utils.response import json_handler
 import json
-from frappe.utils import now_datetime
+from frappe.utils import now_datetime, get_datetime
 from frappe.utils.error import make_error_snapshot
 from zenpy import Zenpy
 from zenpy.lib.api_objects import User, Organization, OrganizationField
@@ -11,24 +11,26 @@ from zenpy.lib.api_objects import User, Organization, OrganizationField
 class ZendeskConnector(BaseConnection):
 	def __init__(self, connector):
 		self.connector = connector
-		settings = frappe.get_doc("Zendesk Settings", None)
+		self.settings = frappe.get_doc("Zendesk Settings", None)
+		if not self.settings.last_sync:
+			frappe.db.set_value("Zendesk Settings", None, last_sync, now_datetime())
 
 		self.name_field = 'id'
 
 		try:
 			self.zenpy_client = Zenpy(**{
-				'email' : settings.email,
-				'token' : settings.get_password(fieldname='api_token',raise_exception=False),
-				'subdomain': settings.subdomain
+				'email' : self.settings.email,
+				'token' : self.settings.get_password(fieldname='api_token',raise_exception=False),
+				'subdomain': self.settings.subdomain
 			})
 		except Exception as e:
 			frappe.log_error(e, 'Zendesk Connection Error')
 
 		try:
 			found = False
-			if settings.org_type_id:
+			if self.settings.org_type_id:
 				for field in self.zenpy_client.organization_fields():
-					if field.id == settings.org_type_id:
+					if field.id == self.settings.org_type_id:
 						found = True
 
 				if found == False:
@@ -59,12 +61,20 @@ class ZendeskConnector(BaseConnection):
 	def get(self, remote_objectname, fields=None, filters=None, start=0, page_length=10):
 		search = filters.get('search')
 		organization_type = filters.get('organization_type')
+		export_type = filters.get('export_type')
 
 		if remote_objectname == 'User':
-			try:
-				return self.get_users(search, start, page_length)
-			except Exception as e:
-				frappe.log_error(e, 'Zendesk Contact Get Error')
+			if export_type == "incremental":
+				try:
+					return self.get_users(search, start, page_length)
+				except Exception as e:
+					frappe.log_error(e, 'Zendesk Contact Get Error')
+
+			else:
+				try:
+					return self.get_incremental_users(search, start, page_length)
+				except Exception as e:
+					frappe.log_error(e, 'Zendesk Contact Get Error')
 
 		if remote_objectname == 'Organization':
 			try:
@@ -108,6 +118,16 @@ class ZendeskConnector(BaseConnection):
 		result = []
 		for user in users:
 			result.append(user)
+		return list(result)
+
+	def get_incremental_users(self, search, start=0, page_length=100):
+		users = self.zenpy_client.users.incremental(start_time=get_datetime(self.settings.last_sync))[start::page_length]
+
+		result = []
+		for user in users:
+			result.append(user)
+
+		frappe.db.set_value("Zendesk Settings", None, last_sync, now_datetime())
 		return list(result)
 
 	def get_organizations(self, search, organization_type, start=0, page_length=100):
