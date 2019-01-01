@@ -36,7 +36,7 @@
  "mapping_name": "Zendesk User to ERPNext Contact", 
  "mapping_type": "Pull", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2018-12-31 15:24:44.286702", 
+ "modified": "2019-01-01 13:59:00.639581", 
  "modified_by": "Administrator", 
  "name": "Zendesk User to ERPNext Contact", 
  "owner": "Administrator", 
