@@ -89,7 +89,6 @@ class ZendeskConnector(BaseConnection):
 			except Exception as e:
 				frappe.log_error("Doc {0}: {1}".format(doc, e), 'Zendesk Contact Insert Error')
 
-		frappe.log_error(doc, "Insert")
 		if doctype == 'Organization':
 			try:
 				return self.insert_organizations(doc)
