@@ -13,7 +13,7 @@ class ZendeskConnector(BaseConnection):
 		self.connector = connector
 		self.settings = frappe.get_doc("Zendesk Settings", None)
 		if not self.settings.last_sync:
-			frappe.db.set_value("Zendesk Settings", None, last_sync, now_datetime())
+			frappe.db.set_value("Zendesk Settings", None, "last_sync", now_datetime())
 
 		self.name_field = 'id'
 
@@ -126,7 +126,7 @@ class ZendeskConnector(BaseConnection):
 		for user in users:
 			result.append(user)
 
-		frappe.db.set_value("Zendesk Settings", None, last_sync, now_datetime())
+		frappe.db.set_value("Zendesk Settings", None, "last_sync", now_datetime())
 		return list(result)
 
 	def get_organizations(self, search, organization_type, start=0, page_length=100):
