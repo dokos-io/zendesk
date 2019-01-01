@@ -66,13 +66,13 @@ class ZendeskConnector(BaseConnection):
 		if remote_objectname == 'User':
 			if export_type == "incremental":
 				try:
-					return self.get_users(search, start, page_length)
+					return self.get_incremental_users(search, start, page_length)
 				except Exception as e:
 					frappe.log_error(e, 'Zendesk Contact Get Error')
 
 			else:
 				try:
-					return self.get_incremental_users(search, start, page_length)
+					return self.get_users(search, start, page_length)
 				except Exception as e:
 					frappe.log_error(e, 'Zendesk Contact Get Error')
 
