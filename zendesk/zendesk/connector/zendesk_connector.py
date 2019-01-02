@@ -12,8 +12,11 @@ class ZendeskConnector(BaseConnection):
 	def __init__(self, connector):
 		self.connector = connector
 		self.settings = frappe.get_doc("Zendesk Settings", None)
-		if not self.settings.last_sync:
-			frappe.db.set_value("Zendesk Settings", None, "last_sync", now_datetime())
+		if not self.settings.last_user_sync:
+			frappe.db.set_value("Zendesk Settings", None, "last_user_sync", now_datetime())
+
+		if not self.settings.last_org_sync:
+			frappe.db.set_value("Zendesk Settings", None, "last_org_sync", now_datetime())
 
 		self.name_field = 'id'
 
@@ -77,10 +80,16 @@ class ZendeskConnector(BaseConnection):
 					frappe.log_error(e, 'Zendesk Contact Get Error')
 
 		if remote_objectname == 'Organization':
-			try:
-				return self.get_organizations(search, organization_type, start, page_length)
-			except Exception as e:
-				frappe.log_error(e, 'Zendesk Company Get Error')
+			if export_type == "incremental":
+				try:
+					return self.get_incremental_organizations(search, organization_type, start, page_length)
+				except Exception as e:
+					frappe.log_error(e, 'Zendesk Company Get Error')
+			else:
+				try:
+					return self.get_organizations(search, organization_type, start, page_length)
+				except Exception as e:
+					frappe.log_error(e, 'Zendesk Company Get Error')
 
 	def insert(self, doctype, doc):
 		if doctype == 'User':
@@ -120,13 +129,13 @@ class ZendeskConnector(BaseConnection):
 		return list(result)
 
 	def get_incremental_users(self, search, start=0, page_length=100):
-		users = self.zenpy_client.users.incremental(start_time=get_datetime(self.settings.last_sync))
+		users = self.zenpy_client.users.incremental(start_time=get_datetime(self.settings.last_user_sync))
 
 		result = []
 		for user in users:
 			result.append(user)
 
-		frappe.db.set_value("Zendesk Settings", None, "last_sync", now_datetime())
+		frappe.db.set_value("Zendesk Settings", None, "last_user_sync", now_datetime())
 		return list(result)
 
 	def get_organizations(self, search, organization_type, start=0, page_length=100):
@@ -140,6 +149,24 @@ class ZendeskConnector(BaseConnection):
 			else:
 				if org.organization_fields["is_supplier"] == True:
 					result.append(org)
+
+		return list(result)
+
+	def get_incremental_organizations(self, search, organization_type, start=0, page_length=100):
+		organizations = self.zenpy_client.organizations.incremental(start_time=get_datetime(self.settings.last_org_sync))
+
+		result = []
+		for org in organizations:
+			if organization_type == "customer":
+				if not org.organization_fields["is_supplier"] or org.organization_fields["is_supplier"] == False:
+					result.append(org)
+
+			else:
+				if org.organization_fields["is_supplier"] == True:
+					result.append(org)
+
+		if organization_type == "supplier":
+			frappe.db.set_value("Zendesk Settings", None, "last_org_sync", now_datetime())
 
 		return list(result)
 

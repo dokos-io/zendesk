@@ -1,5 +1,5 @@
 {
- "condition": "{\"organization_type\": \"customer\"}", 
+ "condition": "{\n\"organization_type\": \"customer\",\n\"export_type\": \"incremental\"\n}", 
  "creation": "2018-12-13 18:24:31.987786", 
  "docstatus": 0, 
  "doctype": "Data Migration Mapping", 
@@ -26,7 +26,7 @@
  "mapping_name": "Zendesk Organization to ERPNext Customer", 
  "mapping_type": "Pull", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2019-01-01 13:59:00.612852", 
+ "modified": "2019-01-02 11:19:14.601182", 
  "modified_by": "Administrator", 
  "name": "Zendesk Organization to ERPNext Customer", 
  "owner": "Administrator", 
