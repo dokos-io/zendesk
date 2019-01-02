@@ -25,7 +25,7 @@
  "mapping_name": "ERPNext Supplier to Zendesk Organization", 
  "mapping_type": "Push", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2019-01-02 11:19:14.574707", 
+ "modified": "2019-01-02 14:37:30.699547", 
  "modified_by": "Administrator", 
  "name": "ERPNext Supplier to Zendesk Organization", 
  "owner": "Administrator", 

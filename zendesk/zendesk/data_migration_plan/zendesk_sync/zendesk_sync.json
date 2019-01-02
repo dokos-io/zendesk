@@ -29,7 +29,7 @@
    "mapping": "Zendesk User to ERPNext Contact"
   }
  ], 
- "modified": "2019-01-02 11:19:14.528551", 
+ "modified": "2019-01-02 14:37:30.651982", 
  "modified_by": "Administrator", 
  "module": "Zendesk", 
  "name": "Zendesk Sync", 

@@ -26,11 +26,11 @@
  "mapping_name": "Zendesk Organization to ERPNext Supplier", 
  "mapping_type": "Pull", 
  "migration_id_field": "zendesk_sync_id", 
- "modified": "2019-01-02 11:19:14.615136", 
+ "modified": "2019-01-02 14:37:30.735858", 
  "modified_by": "Administrator", 
  "name": "Zendesk Organization to ERPNext Supplier", 
  "owner": "Administrator", 
- "page_length": 100, 
+ "page_length": 50000, 
  "remote_objectname": "Organization", 
  "remote_primary_key": "id"
 }
