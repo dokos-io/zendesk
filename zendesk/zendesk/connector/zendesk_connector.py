@@ -96,12 +96,14 @@ class ZendeskConnector(BaseConnection):
 			try:
 				return self.insert_users(doc)
 			except Exception as e:
+				return
 				frappe.log_error("Doc {0}: {1}".format(doc, e), 'Zendesk Contact Insert Error')
 
 		if doctype == 'Organization':
 			try:
 				return self.insert_organizations(doc)
 			except Exception as e:
+				return
 				frappe.log_error("Doc {0}: {1}".format(doc, e), 'Zendesk Organization Insert Error')
 
 	def update(self, doctype, doc, migration_id):
