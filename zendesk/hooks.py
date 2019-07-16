@@ -83,7 +83,7 @@ docs_app = "zendesk"
 
 doc_events = {
 	"Contact": {
-		"on_update": "zendesk.zendesk.utils.format_phone_number"
+		"before_save": "zendesk.zendesk.utils.format_phone_number"
 	}
 }
 
