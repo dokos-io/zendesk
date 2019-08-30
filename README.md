@@ -2,7 +2,7 @@
 
 #### Installation
 
-This application requires [Frappe](https://github.com/frappe/frappe) and [ERPNext](https://github.com/frappe/erpnext) v11.0.0 or higher.
+This application requires [Frappe](https://github.com/frappe/frappe) and [ERPNext](https://github.com/frappe/erpnext) v11.0.0 (not tested on higher versions).
 
 1. `bench get-app zendesk https://github.com/DOKOS-IO/zendesk/`
 2. `bench install-app zendesk`
