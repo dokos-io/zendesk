@@ -6,20 +6,13 @@ from zendesk.zendesk.connector.zendesk_connector import ZendeskConnector
 from frappe.data_migration.doctype.data_migration_connector.connectors.base import BaseConnection
 
 def format_phone_number(doc, method):
-	if doc.phone:
-		try:
-			x = phonenumbers.parse(doc.phone, "FR")
-			doc.phone = phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
-		except Exception as e:
-			frappe.throw(str(e))
-
-	if doc.mobile_no:
-		try:
-			y = phonenumbers.parse(doc.mobile_no, "FR")
-			doc.mobile_no = phonenumbers.format_number(y, phonenumbers.PhoneNumberFormat.E164)
-		except Exception as e:
-			frappe.throw(str(e))
-
+	for item in doc.phone_nos:
+		if item.phone:
+			try:
+				x = phonenumbers.parse(item.phone, "FR")
+				item.phone = phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
+			except Exception as e:
+				frappe.throw(str(e))
 
 def update_zendesk_phonenumbers():
 	connector = ZendeskConnector(BaseConnection)
